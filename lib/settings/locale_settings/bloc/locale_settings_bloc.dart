@@ -42,7 +42,14 @@ class LocaleSettingsBloc
     emit(state.copyWith(status: () => LocaleSettingsStatus.loading));
 
     var newLocale = systemLocaleOption;
-    final storedLocale = _getStoredLocale();
+    Locale? storedLocale;
+
+    try {
+      storedLocale = _getStoredLocale();
+    } catch (_) {
+      // Saved locale is not valid. Invoking deletion
+      _deleteStoredLocale();
+    }
 
     if (storedLocale != null) {
       if (AppLocalizations.supportedLocales.contains(storedLocale)) {
@@ -126,15 +133,30 @@ class LocaleSettingsBloc
           _settingsRepository.getString(key: localePrefsKey);
 
       final localeParts = storedLocaleString.split('_');
-      final languageCode = localeParts[0];
-      final scriptCode = localeParts.length > 1 ? localeParts[1] : null;
-      final countryCode = localeParts.length > 2 ? localeParts[2] : null;
 
-      return Locale.fromSubtags(
-        languageCode: languageCode,
-        scriptCode: scriptCode,
-        countryCode: countryCode,
-      );
+      switch (localeParts.length) {
+        case 1:
+          return Locale(localeParts[0]);
+        case 2:
+          // This can be either "language + country" (e.g. en_US) or
+          // "language + script" (zh_Hant)
+          if (localeParts[1].length == 4) {
+            return Locale.fromSubtags(
+              languageCode: localeParts[0],
+              scriptCode: localeParts[1],
+            );
+          } else {
+            return Locale(localeParts[0], localeParts[1]);
+          }
+        case 3:
+          return Locale.fromSubtags(
+            languageCode: localeParts[0],
+            scriptCode: localeParts[1],
+            countryCode: localeParts[2],
+          );
+        default:
+          throw InvalidLocaleStringException();
+      }
     } else {
       return null;
     }
@@ -159,3 +181,6 @@ class LocaleSettingsBloc
     }
   }
 }
+
+/// Error thrown when a 'locale' does not fit standard locale format.
+class InvalidLocaleStringException implements Exception {}

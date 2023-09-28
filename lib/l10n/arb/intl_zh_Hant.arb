@@ -1,5 +1,5 @@
 {
-  "@@locale": "zh_CN",
+  "@@locale": "zh_Hant",
   "appTitle": "高级国际化",
   "selectedLocale": "当前应用语言：{locale}",
   "changeLocale": "更改语言",
