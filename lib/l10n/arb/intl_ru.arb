@@ -1,0 +1,8 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Расширенная интернационализация",
+  "selectedLocale": "Текущий язык приложения: {locale}",
+  "changeLocale": "Изменить язык",
+  "chooseLocale": "Выберите предпочитаемый язык",
+  "settingsSystemDefault": "По умолчанию системы"
+}

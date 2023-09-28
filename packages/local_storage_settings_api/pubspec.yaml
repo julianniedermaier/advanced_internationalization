@@ -1,0 +1,19 @@
+name: local_storage_settings_api
+description: A Flutter implementation of the SettingsApi that uses local storage.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: '>=3.0.5 <4.0.0'
+
+dependencies:
+  settings_api:
+    path: ../settings_api
+  shared_preferences: ^2.2.1
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.0
+  very_good_analysis: ^5.1.0

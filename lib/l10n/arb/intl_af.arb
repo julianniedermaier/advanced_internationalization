@@ -1,0 +1,8 @@
+{
+  "@@locale": "af",
+  "appTitle": "Gevorderde Internationalisering",
+  "selectedLocale": "Huidige app taal: {locale}",
+  "changeLocale": "Verander taal",
+  "chooseLocale": "Kies voorkeurstaal",
+  "settingsSystemDefault": "Stelselverstek"
+}

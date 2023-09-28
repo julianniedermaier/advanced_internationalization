@@ -1,0 +1,8 @@
+{
+  "@@locale": "zh_CN",
+  "appTitle": "高级国际化",
+  "selectedLocale": "当前应用语言：{locale}",
+  "changeLocale": "更改语言",
+  "chooseLocale": "选择首选语言",
+  "settingsSystemDefault": "系统默认"
+}

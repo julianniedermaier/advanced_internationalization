@@ -1,0 +1,8 @@
+{
+  "@@locale": "en_GB",
+  "appTitle": "Advanced Internationalisation",
+  "selectedLocale": "Current app language: {locale}",
+  "changeLocale": "Change language",
+  "chooseLocale": "Choose preferred language",
+  "settingsSystemDefault": "System default"
+}

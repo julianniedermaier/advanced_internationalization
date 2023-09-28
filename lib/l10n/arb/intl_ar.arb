@@ -1,0 +1,8 @@
+{
+  "@@locale": "ar",
+  "appTitle": "التدويل المتقدم",
+  "selectedLocale": "لغة التطبيق الحالية: {locale}",
+  "changeLocale": "تغيير اللغة",
+  "chooseLocale": "اختر اللغة المفضلة",
+  "settingsSystemDefault": "نظام"
+}

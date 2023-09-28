@@ -1,0 +1,17 @@
+{
+  "@@locale": "en",
+  "appTitle": "Advanced Internationalization",
+  "selectedLocale": "Current app language: {locale}",
+  "@selectedLocale": {
+    "description": "Presents the current locale of the application",
+    "placeholders": {
+      "locale": {
+        "type": "String",
+        "example": "English"
+      }
+    }
+  },
+  "changeLocale": "Change language",
+  "chooseLocale": "Choose preferred language",
+  "settingsSystemDefault": "System"
+}

@@ -1,0 +1,8 @@
+{
+  "@@locale": "bn",
+  "appTitle": "উন্নত আন্তর্জাতিকীকরণ",
+  "selectedLocale": "বর্তমান অ্যাপ্লিকেশনের ভাষা: {locale}",
+  "changeLocale": "ভাষা পরিবর্তন করুন",
+  "chooseLocale": "পছন্দের ভাষা চয়ন করুন",
+  "settingsSystemDefault": "সিস্টেম ডিফল্ট"
+}

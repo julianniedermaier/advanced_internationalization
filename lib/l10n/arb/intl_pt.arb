@@ -1,0 +1,8 @@
+{
+  "@@locale": "pt",
+  "appTitle": "Internacionalização Avançada",
+  "selectedLocale": "Língua da aplicação atual: {locale}",
+  "changeLocale": "Alterar idioma",
+  "chooseLocale": "Escolha o idioma preferido",
+  "settingsSystemDefault": "Padrão do sistema"
+}
