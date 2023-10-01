@@ -22,12 +22,12 @@ import 'package:flutter/material.dart';
 void localeSettingsBottomSheet({
   required BuildContext context,
 }) {
-  var _isBottomSheetOpen = true;
+  var isBottomSheetOpen = true;
 
-  bool _handleDraggableNotification(
+  bool handleDraggableNotification(
     DraggableScrollableNotification notification,
   ) {
-    if (notification.extent <= 0.05 && _isBottomSheetOpen) {
+    if (notification.extent <= 0.05 && isBottomSheetOpen) {
       // Temporary solution awaiting flutter issue #116982 and #36283
       // Relies on showModalBottomSheet running async (await)
       Navigator.of(context).pop();
@@ -43,7 +43,7 @@ void localeSettingsBottomSheet({
     useSafeArea: true,
     builder: (BuildContext context) {
       return NotificationListener<DraggableScrollableNotification>(
-        onNotification: _handleDraggableNotification,
+        onNotification: handleDraggableNotification,
         child: DraggableScrollableSheet(
           key: localeSettingsOptionsSheetKey,
           initialChildSize: 0.4,
@@ -62,6 +62,6 @@ void localeSettingsBottomSheet({
       );
     },
   ).then((_) {
-    _isBottomSheetOpen = false;
+    isBottomSheetOpen = false;
   });
 }

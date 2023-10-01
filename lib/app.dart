@@ -9,14 +9,14 @@ import 'package:settings_repository/settings_repository.dart';
 /// The top-level widget representing the entire application.
 class App extends StatelessWidget {
   /// Creates an instance of the [App] widget and initializes the required
-  /// BLoc providers.
+  /// BLoC providers.
   const App({
     required this.settingsRepository,
     super.key,
   });
 
   /// The [settingsRepository] is responsible for managing the application's
-  /// settings, such as locale and theme preferences.
+  /// settings, such as locale preferences.
   final SettingsRepository settingsRepository;
 
   @override

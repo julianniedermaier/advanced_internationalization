@@ -35,7 +35,7 @@ void main() {
 
     /// Helper function configuring the behavior of the
     /// `MockSettingsRepository`.
-    void _setupMockSettingsRepository(Locale storedLocale) {
+    void setupMockSettingsRepository(Locale storedLocale) {
       // Stub repository contains key call
       when(() => mockSettingsRepository.containsKey(key: any(named: 'key')))
           .thenAnswer((_) => true);
@@ -50,7 +50,7 @@ void main() {
     }
 
     /// Helper function configuring the test environment.
-    void _setUpTestEnvironment({
+    void setUpTestEnvironment({
       required WidgetTester tester,
       required List<Locale> testEnvLocales,
     }) {
@@ -60,26 +60,26 @@ void main() {
     }
 
     /// Helper function returning the current locale of the `HomePage`.
-    Locale _getAppLocale({required WidgetTester tester}) {
+    Locale getAppLocale({required WidgetTester tester}) {
       final context = tester.element(find.byType(HomePage));
       return Localizations.localeOf(context);
     }
 
     /// Helper function to set the test environment, run the test and verify
     /// the outcome.
-    Future<void> _testLocaleBehaviour({
+    Future<void> testLocaleBehaviour({
       required WidgetTester tester,
       required List<Locale> testEnvLocales,
       required Locale expectedLocale,
     }) async {
-      _setUpTestEnvironment(tester: tester, testEnvLocales: testEnvLocales);
+      setUpTestEnvironment(tester: tester, testEnvLocales: testEnvLocales);
 
       // Build the AppView widget with the mocked settings repository
       await tester.pumpWidget(App(settingsRepository: mockSettingsRepository));
       await tester.pumpAndSettle();
 
       // Verify result
-      expect(_getAppLocale(tester: tester), expectedLocale);
+      expect(getAppLocale(tester: tester), expectedLocale);
     }
 
     /// This group of tests is designed to validate the functionality of the
@@ -96,7 +96,7 @@ void main() {
           (WidgetTester tester) async {
         // App starts in the default locale if the device locale(s) is not
         // supported and there is no locale saved in local storage
-        await _testLocaleBehaviour(
+        await testLocaleBehaviour(
           tester: tester,
           testEnvLocales: [unsupportedLocale],
           expectedLocale: defaultLocale,
@@ -108,7 +108,7 @@ void main() {
           (WidgetTester tester) async {
         // App starts in the first device locale if the device locale is
         // supported and there is no locale saved in local storage
-        await _testLocaleBehaviour(
+        await testLocaleBehaviour(
           tester: tester,
           testEnvLocales: [firstSupportedLocale, secondSupportedLocale],
           expectedLocale: firstSupportedLocale,
@@ -122,7 +122,7 @@ void main() {
         // App starts in the second device locale if it is supported and the
         // first device locale is not supported and there is no locale saved in
         // local storage
-        await _testLocaleBehaviour(
+        await testLocaleBehaviour(
           tester: tester,
           testEnvLocales: [unsupportedLocale, firstSupportedLocale],
           expectedLocale: firstSupportedLocale,
@@ -135,7 +135,7 @@ void main() {
           (WidgetTester tester) async {
         // App listens to device locales and changes locale if the device
         // locale changes
-        _setUpTestEnvironment(
+        setUpTestEnvironment(
           tester: tester,
           testEnvLocales: [firstSupportedLocale],
         );
@@ -147,10 +147,10 @@ void main() {
 
         // Verify the app starts in the expected test environment locale (device
         // locale)
-        expect(_getAppLocale(tester: tester), firstSupportedLocale);
+        expect(getAppLocale(tester: tester), firstSupportedLocale);
 
         // Change the test environment
-        _setUpTestEnvironment(
+        setUpTestEnvironment(
           tester: tester,
           testEnvLocales: [secondSupportedLocale],
         );
@@ -160,7 +160,7 @@ void main() {
 
         // Verify the app locale has changed to the new test environment locale
         // (device locale)
-        expect(_getAppLocale(tester: tester), secondSupportedLocale);
+        expect(getAppLocale(tester: tester), secondSupportedLocale);
       });
 
       /// Validates that the app starts in a locale based on the language code
@@ -171,7 +171,7 @@ void main() {
         // App starts in language code only built locale if the device locale
         // country code is not supported and there is no locale saved in
         // local storage
-        await _testLocaleBehaviour(
+        await testLocaleBehaviour(
           tester: tester,
           testEnvLocales: [Locale(firstSupportedLocale.languageCode, 'FOO')],
           expectedLocale: Locale(firstSupportedLocale.languageCode),
@@ -183,14 +183,14 @@ void main() {
     /// Apps localization behaviour given valid saved locale data.
     group('Supported locale saved to local storage', () {
       setUp(() {
-        _setupMockSettingsRepository(firstSupportedLocale);
+        setupMockSettingsRepository(firstSupportedLocale);
       });
 
       /// Validates that the app starts in the saved locale.
       testWidgets('Start in stored locale',
           (WidgetTester tester) async {
         // App starts in stored locale if locale is supported
-        await _testLocaleBehaviour(
+        await testLocaleBehaviour(
           tester: tester,
           testEnvLocales: [firstSupportedLocale, secondSupportedLocale],
           expectedLocale: firstSupportedLocale,
@@ -202,7 +202,7 @@ void main() {
     /// Apps localization behaviour given invalid saved locale data.
     group('Unsupported locale saved to local storage', () {
       setUp(() {
-        _setupMockSettingsRepository(unsupportedLocale);
+        setupMockSettingsRepository(unsupportedLocale);
       });
 
       /// Validates that the app starts in the device locale.
@@ -211,7 +211,7 @@ void main() {
           (WidgetTester tester) async {
         // App starts in first supported device locale if the locale stored in
         // local storage is not supported. The stored locale is deleted
-        await _testLocaleBehaviour(
+        await testLocaleBehaviour(
           tester: tester,
           testEnvLocales: [firstSupportedLocale],
           expectedLocale: firstSupportedLocale,

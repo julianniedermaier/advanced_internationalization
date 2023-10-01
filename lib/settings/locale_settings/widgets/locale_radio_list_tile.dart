@@ -31,11 +31,11 @@ import 'package:flutter/material.dart';
 class LocaleRadioListTile extends StatelessWidget {
   /// Creates an instance of [LocaleRadioListTile].
   const LocaleRadioListTile({
-    super.key,
     required this.locale,
     required this.localeDisplayOption,
     required this.selectedLocaleOption,
     required this.onLocaleChanged,
+    super.key,
   });
 
   /// The locale associated with this radio list tile.

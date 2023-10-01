@@ -20,7 +20,7 @@ void main() {
   });
 
   /// Helper function to create a testable widget for the `HomePage`.
-  Widget _buildTestableWidget(SettingsRepository mockSettingsRepository) {
+  Widget buildTestableWidget(SettingsRepository mockSettingsRepository) {
     // Create a test widget with localization delegates and
     // mockSettingsRepository
     return RepositoryProvider<SettingsRepository>.value(
@@ -43,7 +43,7 @@ void main() {
   /// Validates the construction and the content of the `HomePage`.
   testWidgets('HomePage widget test', (WidgetTester tester) async {
     // Build the test widget
-    await tester.pumpWidget(_buildTestableWidget(mockSettingsRepository));
+    await tester.pumpWidget(buildTestableWidget(mockSettingsRepository));
     await tester.pumpAndSettle();
 
     // Verify the home page scaffold is built

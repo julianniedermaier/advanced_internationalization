@@ -79,7 +79,7 @@ void main() {
 
     /// Helper function configuring the behavior of the
     /// `MockSettingsRepository`.
-    void _setupMockSettingsRepository() {
+    void setupMockSettingsRepository() {
       // Stub repository contains key call
       when(() => mockSettingsRepository.containsKey(key: localePrefsKey))
           .thenAnswer((_) => false);
@@ -95,7 +95,7 @@ void main() {
 
     setUp(() {
       mockSettingsRepository = MockSettingsRepository();
-      _setupMockSettingsRepository();
+      setupMockSettingsRepository();
     });
 
     tearDown(() {
@@ -104,7 +104,7 @@ void main() {
 
     /// Helper function to create a testable widget for the
     /// `LocaleSettingsBottomSheet`.
-    Widget _buildTestableWidget(SettingsRepository mockSettingsRepository) {
+    Widget buildTestableWidget(SettingsRepository mockSettingsRepository) {
       return RepositoryProvider<SettingsRepository>.value(
         value: mockSettingsRepository,
         child: BlocProvider(
@@ -131,8 +131,8 @@ void main() {
     }
 
     /// Helper function to simulate the opening of the modal bottom sheet.
-    Future<void> _openModalBottomSheet(WidgetTester tester) async {
-      await tester.pumpWidget(_buildTestableWidget(mockSettingsRepository));
+    Future<void> openModalBottomSheet(WidgetTester tester) async {
+      await tester.pumpWidget(buildTestableWidget(mockSettingsRepository));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('ChangeLocaleButton')));
       await tester.pumpAndSettle();
@@ -141,7 +141,7 @@ void main() {
     /// Validates the construction and the content of the sheet.
     testWidgets('validate sheet construction and content',
         (WidgetTester tester) async {
-      await _openModalBottomSheet(tester);
+      await openModalBottomSheet(tester);
 
       // Confirm the sheet contains more than one LocaleRadioListTiles
       final localeTilesFinder = find.byType(LocaleRadioListTile);
@@ -168,25 +168,25 @@ void main() {
     /// Validates the various options available to close the sheet.
     testWidgets('close sheet by various options', (WidgetTester tester) async {
       // 1. Close by selecting a new option
-      await _openModalBottomSheet(tester);
+      await openModalBottomSheet(tester);
       await tester.tap(find.byType(LocaleRadioListTile).at(1));
       await tester.pumpAndSettle();
       expect(find.byKey(localeSettingsOptionsSheetKey), findsNothing);
 
       // 2. Close sheet by tapping outside
-      await _openModalBottomSheet(tester);
+      await openModalBottomSheet(tester);
       await tester.tapAt(Offset.zero);
       await tester.pumpAndSettle();
       expect(find.byKey(localeSettingsOptionsSheetKey), findsNothing);
 
       // 3. Close sheet by tapping close button
-      await _openModalBottomSheet(tester);
+      await openModalBottomSheet(tester);
       await tester.tap(find.byKey(localeSheetCloseButtonKey));
       await tester.pumpAndSettle();
       expect(find.byKey(localeSettingsOptionsSheetKey), findsNothing);
 
       // 4. Close sheet by flinging downwards
-      await _openModalBottomSheet(tester);
+      await openModalBottomSheet(tester);
       await tester.fling(
         find.byKey(localeSettingsOptionsSheetKey),
         const Offset(0, 50),

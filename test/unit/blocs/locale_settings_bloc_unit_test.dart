@@ -30,7 +30,7 @@ void main() {
 
     /// Helper function configuring the behavior of the
     /// `MockSettingsRepository`.
-    void _setupMockSettingsRepository({required Locale? storedLocale}) {
+    void setupMockSettingsRepository({required Locale? storedLocale}) {
       if (storedLocale == null) {
         // Mocking an empty settings repository
 
@@ -63,11 +63,11 @@ void main() {
     }
 
     /// Helper function creating the LocaleSettingsBloc.
-    LocaleSettingsBloc _setupLocaleSettingsBloc({
+    LocaleSettingsBloc setupLocaleSettingsBloc({
       required Locale? storedLocale,
     }) {
       // Set up mock settings repository
-      _setupMockSettingsRepository(storedLocale: storedLocale);
+      setupMockSettingsRepository(storedLocale: storedLocale);
 
       // Return bloc with the mocked settings repository
       return LocaleSettingsBloc(
@@ -81,7 +81,7 @@ void main() {
       /// Validates the BLoC emits a saved supported locale.
       blocTest<LocaleSettingsBloc, LocaleSettingsState>(
         'Emit saved supported locale',
-        build: () => _setupLocaleSettingsBloc(storedLocale: supportedLocale),
+        build: () => setupLocaleSettingsBloc(storedLocale: supportedLocale),
         act: (bloc) => bloc.add(const GetLocaleSettings()),
         expect: () => [
           const LocaleSettingsState(status: LocaleSettingsStatus.loading),
@@ -96,7 +96,7 @@ void main() {
       /// and deletes the unsupported locale database entry.
       blocTest<LocaleSettingsBloc, LocaleSettingsState>(
         'Emit system if saved locale is not supported',
-        build: () => _setupLocaleSettingsBloc(storedLocale: unsupportedLocale),
+        build: () => setupLocaleSettingsBloc(storedLocale: unsupportedLocale),
         act: (bloc) => bloc.add(const GetLocaleSettings()),
         expect: () => const [
           LocaleSettingsState(status: LocaleSettingsStatus.loading),
@@ -114,7 +114,7 @@ void main() {
       /// Validates the BLoC emits system if no locale is saved.
       blocTest<LocaleSettingsBloc, LocaleSettingsState>(
         'Emit null if no locale is saved',
-        build: () => _setupLocaleSettingsBloc(storedLocale: null),
+        build: () => setupLocaleSettingsBloc(storedLocale: null),
         act: (bloc) => bloc.add(const GetLocaleSettings()),
         expect: () => const [
           LocaleSettingsState(status: LocaleSettingsStatus.loading),
@@ -136,7 +136,7 @@ void main() {
         /// not supported.
         blocTest<LocaleSettingsBloc, LocaleSettingsState>(
           'Emit no change if new locale is not supported',
-          build: () => _setupLocaleSettingsBloc(storedLocale: supportedLocale),
+          build: () => setupLocaleSettingsBloc(storedLocale: supportedLocale),
           seed: () {
             return LocaleSettingsState(
               status: LocaleSettingsStatus.success,
@@ -169,7 +169,7 @@ void main() {
         /// database entry is deleted.
         blocTest<LocaleSettingsBloc, LocaleSettingsState>(
           'Emit device locale and delete saved entry if no locale is provided',
-          build: () => _setupLocaleSettingsBloc(storedLocale: supportedLocale),
+          build: () => setupLocaleSettingsBloc(storedLocale: supportedLocale),
           seed: () {
             return LocaleSettingsState(
               status: LocaleSettingsStatus.success,
@@ -203,7 +203,7 @@ void main() {
         /// database.
         blocTest<LocaleSettingsBloc, LocaleSettingsState>(
           'Emit new supported locale and save entry',
-          build: () => _setupLocaleSettingsBloc(storedLocale: null),
+          build: () => setupLocaleSettingsBloc(storedLocale: null),
           seed: () {
             return LocaleSettingsState(
               status: LocaleSettingsStatus.success,
@@ -241,7 +241,7 @@ void main() {
       /// Validates the BLoC emits the new device locale.
       blocTest<LocaleSettingsBloc, LocaleSettingsState>(
         'Emit new device locale',
-        build: () => _setupLocaleSettingsBloc(storedLocale: null),
+        build: () => setupLocaleSettingsBloc(storedLocale: null),
         seed: () {
           return LocaleSettingsState(
             status: LocaleSettingsStatus.success,
